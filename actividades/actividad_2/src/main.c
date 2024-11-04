@@ -1,24 +1,27 @@
-#include <stdio.h>
 #include "pico/stdlib.h"
+#include <stdio.h>
 
-/**
- * @brief Programa principal
-*/
-int main(void) {
-	// Inicializo el USB
-    stdio_init_all();
-	// Demora para esperar la conexion
-	sleep_ms(1000);
-	// Cuanto ocupa cada tipo de dato
-	printf("Un char ocupa %d byte\n", sizeof(char));
-	printf("Un short ocupa %d bytes\n", sizeof(short));
-	printf("Un int ocupa %d bytes\n", sizeof(int));
-	printf("Un long int ocupa %d bytes\n", sizeof(long int));
-	printf("Un float ocupa %d bytes\n", sizeof(float));
-	printf("Un double ocupa %d bytes\n", sizeof(double));
+int main (void){        
 
-    while (true) {
+    gpio_init(6);
+    gpio_init(20);
+    gpio_init(21);
+    gpio_init(7);
+    gpio_set_dir(20, false);
+    gpio_set_dir(6,true);
+    gpio_set_dir(21, false);
+    gpio_set_dir(7, true);
 
+    while(true) {
+        if(gpio_get (20)==0){
+            gpio_put(6,true);
+        }
+        if(gpio_get (21)==0){
+            gpio_put(7,true);
+        }
+        else{
+            gpio_put(7, false);
+            gpio_put(6, false);
     }
-    return 0;
+}
 }
